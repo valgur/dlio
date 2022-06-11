@@ -1,0 +1,8 @@
+[submodule "cartographer"]
+	path = cartographer
+	url = https://github.com/valgur/cartographer.git
+	branch = dlio
+[submodule "cartographer_ros"]
+	path = cartographer_ros
+	url = https://github.com/valgur/cartographer_ros.git
+	branch = dlio
