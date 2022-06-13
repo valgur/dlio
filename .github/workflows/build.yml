@@ -1,0 +1,34 @@
+name: Build
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '**.MD'
+      - '.gitignore'
+      - '.dockerignore'
+      - 'imgs/**'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.MD'
+      - '.gitignore'
+      - '.dockerignore'
+      - 'imgs/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ros-distro: [ melodic, noetic ]
+    env:
+      DOCKER_IMAGE: dlio:${{ matrix.ros-distro }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build D-LIOM
+        run: |
+          docker build . \
+            --build-arg ROS_DISTRO=${{ matrix.ros-distro }} \
+            --tag ${DOCKER_IMAGE}
